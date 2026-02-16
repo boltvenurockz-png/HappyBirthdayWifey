@@ -16,7 +16,7 @@ html, body {
     color: #5a2a2a;
 }
 
-/* Cute Opening Screen */
+/* Opening Screen */
 #opening {
     position: fixed;
     width: 100%;
@@ -44,7 +44,6 @@ html, body {
     border-radius: 30px;
     color: white;
     cursor: pointer;
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
 }
 
 .bounceHeart {
@@ -87,16 +86,11 @@ h1 {
     max-width: 90%;
     max-height: 90%;
     border-radius: 20px;
-    animation: slowZoom 8s ease-in-out forwards;
-}
-
-@keyframes slowZoom {
-    from { transform: scale(1); }
-    to { transform: scale(1.08); }
 }
 
 .active { opacity: 1; }
 
+/* Button */
 #heartButton {
     display: none;
     margin-top: 30px;
@@ -109,7 +103,7 @@ h1 {
     cursor: pointer;
 }
 
-/* Essay Card */
+/* Essay */
 #essaySection {
     display: none;
     margin: 60px auto;
@@ -130,6 +124,7 @@ h1 {
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* Final Screen */
 #finalScreen {
     display:none;
     position:fixed;
@@ -144,24 +139,20 @@ h1 {
     font-family:'Great Vibes',cursive;
     font-size:60px;
     color:#b85c5c;
-    animation:fadeIn 3s ease-in-out;
 }
 
-/* Petals */
-.petal {
+/* Falling Hearts */
+.heart {
     position: fixed;
     top: -20px;
-    width: 15px;
-    height: 15px;
-    background: pink;
-    border-radius: 50%;
-    opacity: 0.7;
+    font-size: 18px;
     animation: fall linear infinite;
+    opacity: 0.7;
 }
 
 @keyframes fall {
     to {
-        transform: translateY(110vh) rotate(360deg);
+        transform: translateY(110vh);
         opacity: 0;
     }
 }
@@ -182,7 +173,6 @@ Happy Birthday, Paige — My Beautiful Wife 🎂❤️
 
 <div class="slideshow" id="slideshow" style="display:none;">
 
-<!-- ALL YOUR IMAGES (15 total now) -->
 <div class="slide active"><img src="IMG_4718.png"></div>
 <div class="slide"><img src="IMG_4719.png"></div>
 <div class="slide"><img src="IMG_4720.png"></div>
@@ -197,7 +187,7 @@ Happy Birthday, Paige — My Beautiful Wife 🎂❤️
 <div class="slide"><img src="IMG_4742.PNG"></div>
 <div class="slide"><img src="IMG_4744.JPG"></div>
 <div class="slide"><img src="IMG_4746.JPG"></div>
-<div class="slide"><img src="YOUR_NEW_IMAGE_NAME_HERE"></div>
+<div class="slide"><img src="IMG_4750.png"></div>
 
 </div>
 
@@ -205,10 +195,31 @@ Happy Birthday, Paige — My Beautiful Wife 🎂❤️
 
 <div id="essaySection">
 My love Paige,<br><br>
-I know I hurt you...<br><br>
+
+Tonight I want to speak to you from a place that is honest and vulnerable. Not from ego. Not from pride. Not from frustration. Just from my heart.<br><br>
+
+I know I hurt you. And that truth sits heavy in me.<br><br>
+
+These past few weeks haven’t been easy for me. Being in a new country, still unemployed, adjusting to everything — it has shaken my confidence more than I let you see. I have felt small at times. Dependent. Frustrated with myself.<br><br>
+
+But none of that gives me the right to speak harshly to you — the one person who has stood beside me through everything.<br><br>
+
+You welcomed me here. You have been working. Providing. Supporting. Caring for me without complaint. And instead of responding with gratitude, I let my frustration spill onto you.<br><br>
+
+That is not the man I want to be.<br><br>
+
+The truth is, my anger wasn’t about you. It was about me feeling insecure. Instead of expressing vulnerability, I chose harshness. You did not deserve that.<br><br>
+
 You deserve softness. Appreciation. Respect.<br><br>
-I am deeply grateful for you.<br><br>
-<span style="font-size:40px;color:#b85c5c;">I am sorry.</span><br><br>
+
+I am deeply grateful for you, Paige. Grateful that you believed in me enough to bring me here. Grateful that you wake up and work hard. Grateful that you still care for me even when I fall short.<br><br>
+
+You are my partner. My stability in chaos. My reminder that I am not alone.<br><br>
+
+I promise to grow from this moment. I promise patience. I promise respect. I promise humility.<br><br>
+
+<span style="font-size:42px;color:#b85c5c;">I am sorry.</span><br><br>
+
 Forever choosing you,<br>
 Aravind ❤️
 </div>
@@ -226,14 +237,7 @@ function startExperience(){
     document.getElementById("opening").style.display="none";
     document.getElementById("mainTitle").style.display="block";
     document.getElementById("slideshow").style.display="block";
-
-    const music=document.getElementById("bgMusic");
-    music.volume=0;
-    music.play();
-    let fade=setInterval(()=>{
-        if(music.volume<1){music.volume+=0.05;}
-        else{clearInterval(fade);}
-    },300);
+    document.getElementById("bgMusic").play();
 }
 
 let slides=document.querySelectorAll('.slide');
@@ -269,16 +273,16 @@ function showEssay(){
     },40000);
 }
 
-// Petals
-function createPetal(){
-    const petal=document.createElement("div");
-    petal.classList.add("petal");
-    petal.style.left=Math.random()*100+"vw";
-    petal.style.animationDuration=(Math.random()*5+5)+"s";
-    document.body.appendChild(petal);
-    setTimeout(()=>petal.remove(),10000);
+function createHeart(){
+    const heart=document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML="❤️";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.animationDuration=(Math.random()*4+4)+"s";
+    document.body.appendChild(heart);
+    setTimeout(()=>heart.remove(),8000);
 }
-setInterval(createPetal,800);
+setInterval(createHeart,1200);
 
 </script>
 
