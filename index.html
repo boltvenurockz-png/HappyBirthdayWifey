@@ -3,56 +3,58 @@
 <head>
 <title>Happy Birthday My Love ❤️</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+
 <style>
-body {
+
+/* Force full peach background everywhere */
+html, body {
     margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #1a001a, #330033, #660033);
-    overflow: hidden;
-    color: white;
+    padding: 0;
+    height: 100%;
+    background-color: #FCE8D8;
+    font-family: Arial, sans-serif;
     text-align: center;
+    color: #5a2a2a;
 }
 
-/* Intro Screen */
+/* Countdown Screen */
 #intro {
     position: fixed;
     width: 100%;
-    height: 100vh;
-    background: black;
+    height: 100%;
+    background-color: #FCE8D8;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    z-index: 10;
 }
 
-#intro button {
-    padding: 15px 30px;
-    font-size: 20px;
-    background: #ff1a75;
-    border: none;
-    color: white;
-    border-radius: 30px;
-    cursor: pointer;
-    box-shadow: 0 0 20px #ff1a75;
+/* Countdown Text */
+#countdown {
+    font-size: 40px;
+    margin-top: 20px;
+    color: #b85c5c;
 }
 
 /* Main Content */
 #main {
     display: none;
+    background-color: #FCE8D8;
+    min-height: 100vh;
 }
 
 h1 {
-    margin-top: 20px;
-    font-size: 40px;
-    color: #ff4da6;
+    margin-top: 30px;
+    font-size: 55px;
+    font-family: 'Great Vibes', cursive;
+    color: #b85c5c;
 }
 
 .slideshow {
     position: relative;
     width: 100%;
-    height: 75vh;
-    background: black;
+    height: 70vh;
 }
 
 .slide {
@@ -67,9 +69,10 @@ h1 {
 }
 
 .slide img {
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 90%;
+    max-height: 90%;
     object-fit: contain;
+    border-radius: 20px;
 }
 
 .active {
@@ -77,34 +80,10 @@ h1 {
 }
 
 .message {
-    position: absolute;
-    bottom: 25px;
-    width: 100%;
+    margin-top: 20px;
     font-size: 20px;
-    padding: 10px;
 }
 
-.hearts {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-}
-
-.heart {
-    position: absolute;
-    color: #ff4da6;
-    font-size: 20px;
-    animation: float 6s linear infinite;
-}
-
-@keyframes float {
-    from { transform: translateY(0); opacity: 1; }
-    to { transform: translateY(-900px); opacity: 0; }
-}
-
-/* Confetti */
 .confetti {
     position: fixed;
     width: 10px;
@@ -119,14 +98,15 @@ h1 {
         opacity: 0;
     }
 }
+
 </style>
 </head>
 
 <body>
 
 <div id="intro">
-    <h2>🎁 I Have Something Special For You 🎁</h2>
-    <button onclick="startSurprise()">Click To Open ❤️</button>
+    <h2>🎁 Something Special Unlocks At Midnight 🎁</h2>
+    <div id="countdown"></div>
 </div>
 
 <div id="main">
@@ -149,13 +129,36 @@ Forever yours,<br>
 <b>Aravind ❤️</b>
 </div>
 
-<div class="hearts" id="hearts"></div>
-
 <audio id="bgMusic" src="music.mp4" loop></audio>
 
 </div>
 
 <script>
+
+/* Countdown to Midnight */
+function updateCountdown() {
+    const now = new Date();
+    const midnight = new Date();
+    midnight.setHours(24,0,0,0);
+
+    const diff = midnight - now;
+
+    if (diff <= 0) {
+        startSurprise();
+        return;
+    }
+
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+    document.getElementById("countdown").innerHTML =
+        hours + "h " + minutes + "m " + seconds + "s";
+}
+
+setInterval(updateCountdown, 1000);
+
+/* Start Surprise */
 function startSurprise() {
     document.getElementById("intro").style.display = "none";
     document.getElementById("main").style.display = "block";
@@ -173,18 +176,6 @@ setInterval(() => {
     slides[index].classList.add('active');
 }, 4000);
 
-/* Hearts */
-function createHeart() {
-    const heart = document.createElement('div');
-    heart.classList.add('heart');
-    heart.innerHTML = '❤️';
-    heart.style.left = Math.random() * 100 + 'vw';
-    heart.style.fontSize = Math.random() * 20 + 15 + 'px';
-    document.getElementById('hearts').appendChild(heart);
-    setTimeout(() => heart.remove(), 6000);
-}
-setInterval(createHeart, 300);
-
 /* Confetti */
 function launchConfetti() {
     for (let i = 0; i < 80; i++) {
@@ -192,7 +183,7 @@ function launchConfetti() {
         confetti.classList.add("confetti");
         confetti.style.left = Math.random() * 100 + "vw";
         confetti.style.background =
-            ["red","pink","yellow","blue","white"][Math.floor(Math.random()*5)];
+            ["#e8a87c","#f76c6c","#f8b195","#f67280","#c06c84"][Math.floor(Math.random()*5)];
         confetti.style.animationDuration = (Math.random()*3+2)+"s";
         document.body.appendChild(confetti);
         setTimeout(() => confetti.remove(), 4000);
