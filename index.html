@@ -1,1 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Happy Birthday My Love ❤️</title>
 
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to bottom, #000000, #1a001a);
+    overflow: hidden;
+    color: white;
+    text-align: center;
+}
+
+/* Intro Screen */
+#intro {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 10;
+}
+
+#intro button {
+    padding: 15px 30px;
+    font-size: 20px;
+    background: #ff1a75;
+    border: none;
+    color: white;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 0 20px #ff1a75;
+}
+
+/* Main Content */
+#main {
+    display: none;
+}
+
+h1 {
+    margin-top: 20px;
+    font-size: 42px;
+    animation: glow 2s infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 10px #ff4da6; }
+    to { text-shadow: 0 0 30px #ff1a75; }
+}
+
+.slideshow {
+    position: relative;
+    width: 100%;
+    height: 75vh;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.active {
+    opacity: 1;
+}
+
+.message {
+    position: absolute;
+    bottom: 25px;
+    width: 100%;
+    font-size: 22px;
+}
+
+.hearts {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.heart {
+    position: absolute;
+    color: #ff4da6;
+    font-size: 20px;
+    animation: float 6s linear infinite;
+}
+
+@keyframes float {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-900px); opacity: 0; }
+}
+
+/* Confetti */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    top: -10px;
+    animation: fall 4s linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div id="intro">
+    <h2>🎁 I Have Something Special For You 🎁</h2>
+    <button onclick="startSurprise()">Click To Open ❤️</button>
+</div>
+
+<div id="main">
+<h1>Happy Birthday My Beautiful Wife 🎂❤️</h1>
+
+<div class="slideshow">
+    <div class="slide active"><img src="IMG_4718.png"></div>
+    <div class="slide"><img src="IMG_4719.png"></div>
+    <div class="slide"><img src="IMG_4720.png"></div>
+    <div class="slide"><img src="IMG_4721.png"></div>
+    <div class="slide"><img src="IMG_4722.png"></div>
+    <div class="slide"><img src="IMG_4723.png"></div>
+    <div class="slide"><img src="IMG_4724.png"></div>
+    <div class="slide"><img src="IMG_4726.png"></div>
+</div>
+
+<div class="message">
+Through every laugh, every silly moment, every late-night talk,<br>
+every quiet sleep beside me…<br><br>
+You are my greatest blessing.<br><br>
+Happy Birthday to my wife, my best friend, my peace.<br>
+Forever yours,<br>
+<b>Aravind ❤️</b>
+</div>
+
+<div class="hearts" id="hearts"></div>
+
+<audio id="bgMusic" src="music.mp4" loop></audio>
+
+</div>
+
+<script>
+function startSurprise() {
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("main").style.display = "block";
+    document.getElementById("bgMusic").play();
+    launchConfetti();
+}
+
+/* Slideshow */
+let slides = document.querySelectorAll('.slide');
+let index = 0;
+
+setInterval(() => {
+    slides[index].classList.remove('active');
+    index = (index + 1) % slides.length;
+    slides[index].classList.add('active');
+}, 4000);
+
+/* Hearts */
+function createHeart() {
+    const heart = document.createElement('div');
+    heart.classList.add('heart');
+    heart.innerHTML = '❤️';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.fontSize = Math.random() * 20 + 15 + 'px';
+    document.getElementById('hearts').appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+}
+setInterval(createHeart, 300);
+
+/* Confetti */
+function launchConfetti() {
+    for (let i = 0; i < 80; i++) {
+        let confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        confetti.style.left = Math.random() * 100 + "vw";
+        confetti.style.background =
+            ["red","pink","yellow","blue","white"][Math.floor(Math.random()*5)];
+        confetti.style.animationDuration = (Math.random()*3+2)+"s";
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 4000);
+    }
+}
+</script>
+
+</body>
+</html>
