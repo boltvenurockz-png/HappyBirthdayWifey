@@ -16,30 +16,26 @@ html, body {
     color: #5a2a2a;
 }
 
-/* INTRO SCREEN */
 #intro {
     position: fixed;
     width: 100%;
     height: 100%;
     background-color: #FCE8D8;
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
-/* COUNTDOWN STYLE */
 #countdown {
-    font-size: 45px;
+    font-size: 48px;
     margin-top: 20px;
     color: #b85c5c;
 }
 
-/* MAIN CONTENT */
 #main {
     display: none;
     min-height: 100vh;
-    background-color: #FCE8D8;
 }
 
 h1 {
@@ -82,7 +78,6 @@ h1 {
     font-size: 20px;
 }
 
-/* CONFETTI */
 .confetti {
     position: fixed;
     width: 10px;
@@ -102,13 +97,11 @@ h1 {
 
 <body>
 
-<!-- INTRO COUNTDOWN -->
 <div id="intro">
     <h2>🎁 Something Special Unlocks At Midnight 🎁</h2>
     <div id="countdown"></div>
 </div>
 
-<!-- MAIN SURPRISE -->
 <div id="main">
 <h1>Happy Birthday My Beautiful Wife 🎂❤️</h1>
 
@@ -135,30 +128,44 @@ Forever yours,<br>
 
 <script>
 
-/* COUNTDOWN TO MIDNIGHT */
-function updateCountdown() {
-    const now = new Date();
-    const midnight = new Date();
-    midnight.setHours(24,0,0,0);
-
-    const diff = midnight - now;
-
-    if (diff <= 0) {
-        startSurprise();
-        return;
-    }
-
-    const hours = Math.floor(diff / (1000 * 60 * 60));
-    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-    document.getElementById("countdown").innerHTML =
-        hours + "h " + minutes + "m " + seconds + "s";
+// New York timezone calculation
+function getNYTime() {
+    return new Date(new Date().toLocaleString("en-US", {timeZone: "America/New_York"}));
 }
 
-setInterval(updateCountdown, 1000);
+function checkTime() {
 
-/* START SURPRISE */
+    const nowNY = getNYTime();
+
+    const year = nowNY.getFullYear();
+    const month = nowNY.getMonth();
+    const date = nowNY.getDate();
+
+    const lockStart = new Date(year, month, date, 23, 40, 0); // 11:40 PM
+    const unlockTime = new Date(year, month, date + 1, 0, 0, 0); // 12:00 AM
+
+    if (nowNY >= lockStart && nowNY < unlockTime) {
+        document.getElementById("intro").style.display = "flex";
+        document.getElementById("main").style.display = "none";
+
+        const diff = unlockTime - nowNY;
+
+        const minutes = Math.floor(diff / (1000 * 60));
+        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+        document.getElementById("countdown").innerHTML =
+            minutes + "m " + seconds + "s";
+
+    } else if (nowNY >= unlockTime) {
+        startSurprise();
+    } else {
+        // Before 11:40 → show main page normally
+        document.getElementById("main").style.display = "block";
+    }
+}
+
+setInterval(checkTime, 1000);
+
 function startSurprise() {
     document.getElementById("intro").style.display = "none";
     document.getElementById("main").style.display = "block";
@@ -166,7 +173,7 @@ function startSurprise() {
     launchConfetti();
 }
 
-/* SLIDESHOW */
+// Slideshow
 let slides = document.querySelectorAll('.slide');
 let index = 0;
 
@@ -176,7 +183,7 @@ setInterval(() => {
     slides[index].classList.add('active');
 }, 4000);
 
-/* CONFETTI EFFECT */
+// Confetti
 function launchConfetti() {
     for (let i = 0; i < 80; i++) {
         let confetti = document.createElement("div");
@@ -189,6 +196,8 @@ function launchConfetti() {
         setTimeout(() => confetti.remove(), 4000);
     }
 }
+
+checkTime();
 </script>
 
 </body>
