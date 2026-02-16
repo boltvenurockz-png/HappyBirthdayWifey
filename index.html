@@ -1,43 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Happy Birthday My Love ❤️</title>
+<title>For My Love ❤️</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display&display=swap" rel="stylesheet">
 
 <style>
 html, body {
     margin: 0;
     padding: 0;
-    height: 100%;
     background-color: #FCE8D8;
     font-family: Arial, sans-serif;
     text-align: center;
     color: #5a2a2a;
 }
 
-#intro {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background-color: #FCE8D8;
-    display: none;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-
-#countdown {
-    font-size: 48px;
-    margin-top: 20px;
-    color: #b85c5c;
-}
-
-#main {
-    display: none;
-    min-height: 100vh;
-}
-
+/* TITLE */
 h1 {
     margin-top: 30px;
     font-size: 60px;
@@ -45,6 +23,7 @@ h1 {
     color: #b85c5c;
 }
 
+/* SLIDESHOW */
 .slideshow {
     position: relative;
     width: 100%;
@@ -73,39 +52,45 @@ h1 {
     opacity: 1;
 }
 
-.message {
-    margin-top: 20px;
+/* BUTTON */
+#heartButton {
+    display: none;
+    margin-top: 30px;
+    padding: 15px 30px;
     font-size: 20px;
+    background: #e8a87c;
+    border: none;
+    border-radius: 25px;
+    color: white;
+    cursor: pointer;
 }
 
-.confetti {
-    position: fixed;
-    width: 10px;
-    height: 10px;
-    top: -10px;
-    animation: fall 4s linear forwards;
+/* ESSAY SECTION */
+#essaySection {
+    display: none;
+    padding: 60px 15%;
+    font-family: 'Great Vibes', cursive;
+    font-size: 32px;
+    line-height: 1.8;
+    text-align: left;
+    animation: fadeIn 2s ease-in-out;
 }
 
-@keyframes fall {
-    to {
-        transform: translateY(100vh) rotate(720deg);
-        opacity: 0;
-    }
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
+
 </style>
 </head>
 
 <body>
 
-<div id="intro">
-    <h2>🎁 Something Special Unlocks At Midnight 🎁</h2>
-    <div id="countdown"></div>
-</div>
-
-<div id="main">
 <h1>Happy Birthday My Beautiful Wife 🎂❤️</h1>
 
-<div class="slideshow">
+<div class="slideshow" id="slideshow">
+
+    <!-- 11 IMAGES -->
     <div class="slide active"><img src="IMG_4718.png"></div>
     <div class="slide"><img src="IMG_4719.png"></div>
     <div class="slide"><img src="IMG_4720.png"></div>
@@ -114,90 +99,89 @@ h1 {
     <div class="slide"><img src="IMG_4723.png"></div>
     <div class="slide"><img src="IMG_4724.png"></div>
     <div class="slide"><img src="IMG_4726.png"></div>
+    <div class="slide"><img src="IMG_4727.png"></div>
+    <div class="slide"><img src="IMG_4728.png"></div>
+    <div class="slide"><img src="IMG_4729.png"></div>
+
 </div>
 
-<div class="message">
-Happy Birthday to my wife, my best friend, my peace.<br>
-Forever yours,<br>
-<b>Aravind ❤️</b>
+<button id="heartButton" onclick="showEssay()">Read My Heart ❤️</button>
+
+<div id="essaySection">
+My love,<br><br>
+
+Tonight I want to speak to you from a place that is honest and vulnerable. Not from ego. Not from pride. Not from frustration. Just from my heart.<br><br>
+
+I know I hurt you. And that truth sits heavy in me.<br><br>
+
+These past few weeks haven’t been easy for me. Being in a new country, still unemployed, adjusting to everything — it has shaken my confidence more than I let you see. I have felt small at times. Dependent. Frustrated with myself.<br><br>
+
+But none of that gives me the right to speak harshly to the one person who has stood beside me through everything — you.<br><br>
+
+You welcomed me here. You have been working. Providing. Supporting. Serving me without complaint. And instead of responding with gratitude, I let my frustration spill onto you.<br><br>
+
+That is not the man I want to be.<br><br>
+
+The truth is, my anger wasn’t about you. It was about me feeling insecure. Instead of expressing vulnerability, I chose harshness. You did not deserve that.<br><br>
+
+You deserve softness. Appreciation. Respect.<br><br>
+
+I am deeply grateful for you. Grateful that you believed in me enough to bring me here. Grateful that you wake up and work hard. Grateful that you still care for me even when I fall short.<br><br>
+
+You are my partner. My stability in chaos. My reminder that I am not alone.<br><br>
+
+I promise to grow from this moment. I promise patience. I promise respect. I promise humility.<br><br>
+
+Thank you for your strength. Thank you for your grace. Thank you for loving me.<br><br>
+
+I am blessed beyond measure to call you my wife.<br><br>
+
+I am sorry.<br><br>
+
+Forever choosing you,<br>
+Aravind ❤️
 </div>
 
 <audio id="bgMusic" src="music.mp4" loop></audio>
 
-</div>
-
 <script>
 
-// New York timezone calculation
-function getNYTime() {
-    return new Date(new Date().toLocaleString("en-US", {timeZone: "America/New_York"}));
-}
-
-function checkTime() {
-
-    const nowNY = getNYTime();
-
-    const year = nowNY.getFullYear();
-    const month = nowNY.getMonth();
-    const date = nowNY.getDate();
-
-    const lockStart = new Date(year, month, date, 23, 40, 0); // 11:40 PM
-    const unlockTime = new Date(year, month, date + 1, 0, 0, 0); // 12:00 AM
-
-    if (nowNY >= lockStart && nowNY < unlockTime) {
-        document.getElementById("intro").style.display = "flex";
-        document.getElementById("main").style.display = "none";
-
-        const diff = unlockTime - nowNY;
-
-        const minutes = Math.floor(diff / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-        document.getElementById("countdown").innerHTML =
-            minutes + "m " + seconds + "s";
-
-    } else if (nowNY >= unlockTime) {
-        startSurprise();
-    } else {
-        // Before 11:40 → show main page normally
-        document.getElementById("main").style.display = "block";
-    }
-}
-
-setInterval(checkTime, 1000);
-
-function startSurprise() {
-    document.getElementById("intro").style.display = "none";
-    document.getElementById("main").style.display = "block";
-    document.getElementById("bgMusic").play();
-    launchConfetti();
-}
-
-// Slideshow
 let slides = document.querySelectorAll('.slide');
 let index = 0;
+let totalSlides = slides.length;
+let playCount = 0;
 
-setInterval(() => {
+let slideshowInterval = setInterval(() => {
+
     slides[index].classList.remove('active');
-    index = (index + 1) % slides.length;
+    index++;
+
+    if (index >= totalSlides) {
+        index = 0;
+        playCount++;
+    }
+
     slides[index].classList.add('active');
+
+    if (playCount === 2) {
+        clearInterval(slideshowInterval);
+        document.getElementById("heartButton").style.display = "inline-block";
+    }
+
 }, 4000);
 
-// Confetti
-function launchConfetti() {
-    for (let i = 0; i < 80; i++) {
-        let confetti = document.createElement("div");
-        confetti.classList.add("confetti");
-        confetti.style.left = Math.random() * 100 + "vw";
-        confetti.style.background =
-            ["#e8a87c","#f76c6c","#f8b195","#f67280","#c06c84"][Math.floor(Math.random()*5)];
-        confetti.style.animationDuration = (Math.random()*3+2)+"s";
-        document.body.appendChild(confetti);
-        setTimeout(() => confetti.remove(), 4000);
-    }
+// Start music immediately (requires user interaction in some browsers)
+document.body.addEventListener("click", function(){
+    document.getElementById("bgMusic").play();
+}, { once: true });
+
+function showEssay() {
+    document.getElementById("slideshow").style.display = "none";
+    document.getElementById("heartButton").style.display = "none";
+    document.getElementById("essaySection").style.display = "block";
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-checkTime();
 </script>
 
 </body>
